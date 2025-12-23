@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from './auth-provider';
-import { Button } from '@/components/ui/button';
+import { Button } from './ui/button';
 import {
   Dialog,
   DialogContent,
