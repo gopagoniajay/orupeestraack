@@ -1,7 +1,5 @@
 'use client';
 
-'use client';
-
 import { useAuth } from './auth-provider';
 import { Button } from '@/components/ui/button';
 import { Wallet, LogOut, User, Menu, Moon, Sun } from 'lucide-react';
