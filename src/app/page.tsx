@@ -8,7 +8,7 @@ import { Transaction } from '@/lib/types';
 import { Navbar } from '@/components/navbar';
 import { formatCurrency } from '@/lib/utils';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { Button } from '../components/ui/button';
 import { AddTransactionDialog } from '@/components/add-transaction-dialog';
 import { 
   ArrowUpCircle, 
