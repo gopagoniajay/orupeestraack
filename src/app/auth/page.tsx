@@ -18,37 +18,46 @@ export default function AuthPage() {
   const [password, setPassword] = useState('');
   const router = useRouter();
 
-  const handleAuth = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
+    const handleAuth = async (e: React.FormEvent) => {
+      e.preventDefault();
+      setLoading(true);
 
-    try {
-      if (isSignUp) {
-        const { error } = await supabase.auth.signUp({
-          email,
-          password,
-          options: {
-            emailRedirectTo: `${window.location.origin}/auth/callback`,
-          },
-        });
-        if (error) throw error;
-        toast.success('Registration successful! Please check your email for a confirmation link.');
-      } else {
-        const { error } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
-        if (error) throw error;
-        toast.success('Welcome back!');
-        router.push('/');
-        router.refresh();
+      const trimmedEmail = email.trim();
+      const trimmedPassword = password.trim();
+
+      try {
+        if (isSignUp) {
+          const { error } = await supabase.auth.signUp({
+            email: trimmedEmail,
+            password: trimmedPassword,
+            options: {
+              emailRedirectTo: `${window.location.origin}/auth/callback`,
+            },
+          });
+          if (error) throw error;
+          toast.success('Registration successful! Please check your email for a confirmation link.');
+        } else {
+          const { error } = await supabase.auth.signInWithPassword({
+            email: trimmedEmail,
+            password: trimmedPassword,
+          });
+          if (error) {
+            if (error.message.toLowerCase().includes('confirm')) {
+              toast.error('Please confirm your email address before logging in.');
+              return;
+            }
+            throw error;
+          }
+          toast.success('Welcome back!');
+          router.push('/');
+          router.refresh();
+        }
+      } catch (error: any) {
+        toast.error(error.message || 'An error occurred during authentication');
+      } finally {
+        setLoading(false);
       }
-    } catch (error: any) {
-      toast.error(error.message || 'An error occurred during authentication');
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
 
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-zinc-50 p-4 dark:bg-zinc-950">
