@@ -1,7 +1,7 @@
 'use client';
 
 import { useAuth } from './auth-provider';
-import { Button } from './ui/button';
+import { Button } from "./ui/button";
 import { Wallet, LogOut, User, Menu, Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { 
